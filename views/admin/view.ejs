@@ -1,0 +1,47 @@
+<%- include('../includes/header.ejs') %>
+
+    <div class="ui top attached four item menu">
+        <a class="item" href="<%= ROOT_PATH %>/admin/add-id">Add-ID</a>
+        <a class="item" href="<%= ROOT_PATH %>/admin/rem-id">Remove-ID</a>
+        <a class="active item" href="<%= ROOT_PATH %>/admin/view">View</a>
+        <a class="item" href="<%= ROOT_PATH %>/admin/logout">Logout</a>
+    </div>
+    <div class="ui attached three item menu">
+        <a class="item" href="<%= ROOT_PATH %>/set-name">Set Name</a>
+        <a class="item" href="<%= ROOT_PATH %>/view-name">View Name</a>
+        <a class="item" href="<%= ROOT_PATH %>/view-list">View List</a>
+    </div>
+
+    <div class="ui center aligned attached one item menu">
+        <div class="item">
+            <% if(lock.name==='true'){ %>
+                <b>LOCKED</b>
+            <% }else{ %>
+                <b>UNLOCKED</b>
+            <% } %>
+            &emsp;
+            <a href="<%= ROOT_PATH %>/admin/turnlock">TurnLock</a>
+        </div>
+    </div>
+
+    <div class="ui hidden divider"></div>
+
+    <table class="ui celled stripped table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(i of data){ %>
+                <tr>
+                    <td><%= i.id %></td>
+                    <td><%= i.name %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    
+<%- include('../includes/footer.ejs') %>

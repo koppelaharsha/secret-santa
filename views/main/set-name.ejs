@@ -1,0 +1,44 @@
+<%- include('../includes/header.ejs') %>
+
+<div class="ui attached three item menu">
+    <a class="active item" href="<%= ROOT_PATH %>/set-name">Set Name</a>
+    <a class="item" href="<%= ROOT_PATH %>/view-name">View Name</a>
+    <a class="item" href="<%= ROOT_PATH %>/view-list">View List</a>
+</div>
+
+<div class="ui hidden divider"></div>
+
+<div class="ui centered stackable grid">
+	<div class="sixteen wide mobile eight wide tablet eight wide computer column">
+		<div class="ui form segment">
+			<h3 class="center aligned header">SET NAME</h3>
+			<% if(msg){ %>
+			<div class="ui error message segment">
+				<%= msg %>
+			</div>
+			<% } %>
+            <form action="<%= ROOT_PATH %>/set-name" method="post">
+                <div class="field">
+                    <label for="id">ID</label>
+                    <div class="ui left icon input">
+                        <i class="hashtag icon"></i>
+                        <input type="text" name="id" placeholder="" required>
+                    </div>
+                </div>
+                <div class="field">
+					<label for="name">Name</label>
+					<div class="ui left icon input">
+						<i class="user icon"></i>
+						<input type="text" name="name" placeholder="" required>
+					</div>
+				</div>
+                <div class="field">
+                    <button class="ui blue submit fluid button" type="submit">SET NAME</button>
+                </div>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/footer.ejs') %>

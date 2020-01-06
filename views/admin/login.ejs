@@ -1,0 +1,44 @@
+<%- include('../includes/header') %>
+
+<div class="ui attached three item menu">
+	<a class="item" href="<%= ROOT_PATH %>/set-name">Set Name</a>
+	<a class="item" href="<%= ROOT_PATH %>/view-name">View Name</a>
+	<a class="item" href="<%= ROOT_PATH %>/view-list">View List</a>
+</div>
+
+<div class="ui hidden divider"></div>
+
+<div class="ui centered stackable grid">
+	<div class="sixteen wide mobile eight wide tablet eight wide computer column">
+		<div class="ui form segment">
+			<h3 class="center aligned header">Login</h3>
+			<% if(msg){ %>
+			<div class="ui error message segment">
+				<%= msg %>
+			</div>
+			<% } %>
+			<form action="<%= ROOT_PATH %>/admin/login" method="post">
+				<div class="field">
+					<label for="username">Username</label>
+					<div class="ui left icon input">
+						<i class="user icon"></i>
+						<input type="text" name="username" placeholder="Username" required>
+					</div>
+				</div>
+				<div class="field">
+					<label for="password">Password</label>
+					<div class="ui left icon input">
+						<i class="lock icon"></i>
+						<input type="password" name="password" placeholder="********" required>
+					</div>
+				</div>
+				<div class="field">
+					<button class="ui blue submit fluid button" type="submit">LOGIN</button>
+				</div>
+				<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+			</form>
+		</div>
+	</div>
+</div>
+
+<%- include('../includes/footer') %>

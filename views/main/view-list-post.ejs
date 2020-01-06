@@ -1,0 +1,29 @@
+<%- include('../includes/header.ejs') %>
+
+<div class="ui attached three item menu">
+    <a class="item" href="<%= ROOT_PATH %>/set-name">Set Name</a>
+    <a class="item" href="<%= ROOT_PATH %>/view-name">View Name</a>
+    <a class="active item" href="<%= ROOT_PATH %>/view-list">View List</a>
+</div>
+
+<div class="ui hidden divider"></div>
+
+    <table class="ui celled stripped table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(i of data){ %>
+                <tr>
+                    <td><%= i.id %></td>
+                    <td><%= i.name %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    
+<%- include('../includes/footer.ejs') %>

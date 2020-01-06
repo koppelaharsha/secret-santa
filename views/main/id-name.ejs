@@ -1,0 +1,19 @@
+<%- include('../includes/header.ejs') %>
+
+<div class="ui attached three item menu">
+    <a class="item" href="<%= ROOT_PATH %>/set-name">Set Name</a>
+    <a class="active item" href="<%= ROOT_PATH %>/view-name">View Name</a>
+    <a class="item" href="<%= ROOT_PATH %>/view-list">View List</a>
+</div>
+
+<div class="ui hidden divider"></div>
+
+<div class="ui container segment">
+	<% if(data.name==="N/A"){ %>
+        No Name assigned for the ID <b><%= data.id %></b>
+    <% }else{ %>
+        Assigned Name for the ID <b><%= data.id %></b> is <b><%= data.name %></b>
+    <% } %>
+</div>
+
+<%- include('../includes/footer.ejs') %>

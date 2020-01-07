@@ -128,16 +128,18 @@ module.exports.view = (req,res,next) => {
     }
 }
 
-module.exports.turnlock = async (req,res,next) => {
+module.exports.turnlock = (req,res,next) => {
     if(req.session.user && req.session.user.isAdmin){
-        let lock = await Santa.findOne({ where : { id : 'lock'} });
-        if(lock.name==='true'){
-            lock.name = 'false'
-        }else{
-            lock.name = 'true'
-        }
-        await lock.save();
-        return res.redirect(res.locals.ROOT_PATH + '/admin/view');
+        Santa.findOne({ where : { id : 'lock'} })
+        .then( lock => {
+            lock.name = lock.name === 'true' ? 'false' : 'true';
+            lock.save().then( lock => {
+                return res.redirect(res.locals.ROOT_PATH + '/admin/view');
+            })
+        }).catch( error => {
+            console.log(error);
+            return res.redirect(res.locals.ROOT_PATH + '/admin/view');
+        })
     }else{
         return res.redirect(res.locals.ROOT_PATH + '/admin/login');
     }

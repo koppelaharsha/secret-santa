@@ -12,29 +12,37 @@ module.exports.GETsetName = (req,res,next) => {
     });
 }
 
-module.exports.POSTsetName = async (req,res,next) => {
+module.exports.POSTsetName = (req,res,next) => {
     let id = req.body.id.toString();
     let name = req.body.name.toString();
     if(id==='lock'){
         req.flash('msg', 'ID does not exists');
         return res.redirect(res.locals.ROOT_PATH + '/set-name');
     }else{
-        let lock = await Santa.findOne({ where: { id: 'lock'}});
-        if(lock && lock.name==='true'){
-            req.flash('msg', 'Cannot Set Name');
-            return res.redirect(res.locals.ROOT_PATH + '/set-name');
-        }else{
-            let data = await Santa.findOne({ where: { id: id } });
-            if(!data){
-                req.flash('msg', 'ID does not exists');
+        Santa.findOne({ where: { id: 'lock'}})
+        .then( lock => {
+            if( lock && lock.name==='true' ){
+                req.flash('msg', 'Cannot Set Name');
                 return res.redirect(res.locals.ROOT_PATH + '/set-name');
             }else{
-                data.name = name;
-                await data.save();
-                data = await Santa.findOne({ where: { id: id } });
-                return res.render('main/id-name',{ data })
-            }
-        }
+                Santa.findOne({ where: { id: id } })
+                .then( data => {
+                    if(!data){
+                        req.flash('msg', 'ID does not exists');
+                        return res.redirect(res.locals.ROOT_PATH + '/set-name');
+                    }else{
+                        data.name = name;
+                        data.save()
+                        .then( data => {
+                            return res.render('main/id-name',{ data })
+                        });
+                    }
+                })
+            }})
+        .catch( error => {
+            req.flash('msg', 'Error setting Name');
+            return res.redirect(res.locals.ROOT_PATH + '/set-name');
+        });
     }
 }
 
@@ -45,14 +53,20 @@ module.exports.GETviewName = (req,res,next) => {
     });
 }
 
-module.exports.POSTviewName = async (req,res,next) => {
+module.exports.POSTviewName = (req,res,next) => {
     let id = req.body.id.toString();
-    let data = await Santa.findOne({ where: { id: id } });
-    if(!data){
-        req.flash('msg','ID does not exists');
-        return res.redirect(res.locals.ROOT_PATH + '/view-name');
-    }
-    return res.render('main/id-name',{ data });
+    Santa.findOne({ where: { id: id } })
+        .then( data => {
+            if(!data){
+                req.flash('msg','ID does not exists');
+                return res.redirect(res.locals.ROOT_PATH + '/view-name');
+            }
+            return res.render('main/id-name',{ data });
+        })
+        .catch( error => {
+            req.flash('msg', 'Error setting Name');
+            return res.redirect(res.locals.ROOT_PATH + '/set-name');
+        });
 }
 
 module.exports.GETviewList = (req,res,next) => {

@@ -30,7 +30,7 @@ module.exports.POSTsetName = async (req,res,next) => {
                 return res.redirect(res.locals.ROOT_PATH + '/set-name');
             }else{
                 data.name = name;
-                data.save();
+                await data.save();
                 data = await Santa.findOne({ where: { id: id } });
                 return res.render('main/id-name',{ data })
             }

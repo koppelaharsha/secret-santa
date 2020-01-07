@@ -6,11 +6,14 @@ const csrf = require('csurf');
 const flash = require('connect-flash');
 const helmet = require('helmet');
 const hpp = require('hpp');
+const dotenv = require('dotenv');
 
+dotenv.config();
 const app = express();
 app.locals.ROOT_PATH = '/santa';
 app.use(compressor());
 app.use(helmet());
+app.use(require('./util/logger'));
 app.use(express.static('./public'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -31,7 +34,7 @@ sequelize.sync()
             where : { id : 'lock' },
             defaults : { name : 'false'}
         }).then(([user,created]) => {
-            app.listen('1334','localhost');
+            app.listen(process.env.PORT,process.env.HOST);
         })
     }).catch( error => {
         console.log(error);

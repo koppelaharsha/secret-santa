@@ -12,11 +12,11 @@
   "dependencies": {
     "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
+    "connect-session-sequelize": "^6.0.0",
     "csurf": "^1.10.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "express-mysql-session": "^2.1.0",
     "express-session": "^1.17.0",
     "helmet": "^3.21.2",
     "hpp": "^0.2.2",

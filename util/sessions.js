@@ -1,21 +1,14 @@
 const session = require('express-session');
-const MySQLstore = require('express-mysql-session')(session);
-const { mysqlCredentials, session_secret } = require('../data/keys');
-
-const sessionStore = new MySQLstore({
-    host: mysqlCredentials.hostname,
-    port: '3306',
-    user: mysqlCredentials.username,
-    password: mysqlCredentials.password,
-    database: mysqlCredentials.database
-});
+const sequelize = require('./db');
+const sequelizeStore = require('connect-session-sequelize')(session.Store)
+const {session_secret} = require('../data/keys');
 
 module.exports = session({
     secret: session_secret,
     key: 'sessionid',
-    resave: true,
-    saveUninitialized: true,
-    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+    store: new sequelizeStore({db:sequelize}),
     cookie: {
         path: '/',
         httpOnly: true,

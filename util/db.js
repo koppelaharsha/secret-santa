@@ -5,15 +5,7 @@ const sequelize = new Sequelize(
     mysqlCredentials.database,
     mysqlCredentials.username,
     mysqlCredentials.password,
-    {
-        host: mysqlCredentials.hostname,
-        port: 3306,
-        dialect: 'mysql',
-        dialectOptions:{
-            ssl: 'Amazon RDS'
-        },
-        timezone: '+05:30'
-    }
+    mysqlCredentials.options
 );
 
 module.exports = sequelize;
